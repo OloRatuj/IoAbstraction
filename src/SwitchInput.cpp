@@ -266,6 +266,7 @@ bool SwitchInput::runLoop() {
 RotaryEncoder::RotaryEncoder(EncoderCallbackFn callback) : notify{} {
     this->notify.callback = callback;
 	this->currentReading = 0;
+        this->currentIncrement = 0;
 	this->maximumValue = 0;
     this->flags = 0U;
     bitWrite(flags, LAST_SYNC_STATUS, 1);
@@ -314,6 +315,7 @@ void RotaryEncoder::setUserIntention(EncoderUserIntention intention) {
 #define safeAbs(x) ((x) < 0 ? -(x) : (x))
 
 void RotaryEncoder::increment(int8_t incVal) {
+    this->currentIncrement = incVal;
     if(maximumValue == 0 && intent == DIRECTION_ONLY) {
 		// first check if we are in direction only mode (max = 0)
 		 runCallback(incVal);

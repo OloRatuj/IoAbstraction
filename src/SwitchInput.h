@@ -205,6 +205,7 @@ protected:
     enum EncoderFlagBits { LAST_SYNC_STATUS=0, WRAP_AROUND_MODE, OO_LISTENER_CALLBACK, LAST_ENCODER_DIRECTION_UP };
 	uint16_t maximumValue;
 	uint16_t currentReading;
+    uint16_t currentIncrement;
     uint8_t stepSize;
     union {
         EncoderCallbackFn callback;
@@ -242,6 +243,11 @@ public:
 	 * Gets the current value of the encoder.
 	 */
 	int getCurrentReading() const { return currentReading; }
+	/**
+	 * Gets the current increment value of the encoder.
+	 */
+	int getCurrentIncrement() const { return currentIncrement; }
+	
 
 	/**
 	 * Sets the current value of the encoder.
@@ -249,6 +255,12 @@ public:
 	 */
 	void setCurrentReading(int reading) { currentReading = reading; }
 
+	/**
+	 * Sets the current increment value of the encoder.
+	 * @param increment will become the new current value.
+	 */
+	void setCurrentIncrement(int increment) { currentIncrement = increment; }
+    
 	/**
 	 * Change the value represented by the encoder by incVal. Normally called internally.
 	 * @param incVal the amount by which to change the encoder.
@@ -639,6 +651,7 @@ public:
 	 * Gets a pointer to the current encoder, or NULL if there is not one
 	 */
 	RotaryEncoder* getEncoder() {return encoder[0]; }
+    RotaryEncoder* getEncoder( uint8_t slot ) {return encoder[slot]; }
 
 	/**
 	 * This is helper function that calls the rotary encoders change precision function. It changes the
